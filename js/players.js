@@ -11,8 +11,9 @@ class Player extends PIXI.Graphics {
       this.beginFill(0xFF0000);
     this.drawRect(0, 0, 1, 1);
 
-    this.x = Math.floor(Math.random() * 60) + 1;
-    this.y = Math.floor(Math.random() * 37) + 1;
+    this.x = Math.floor(Math.random() * VENUE_WIDTH);
+    this.y = Math.floor(Math.random() * VENUE_HEIGHT);
+    //console.log("Player (" + this.x + "," + this.y +")");
 
   }
 }
