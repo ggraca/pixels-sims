@@ -8,7 +8,7 @@ for (var i = 0; i < 100; i++){
   players.push(player)
   playersContainer.addChild(player);
 }
-
+var queue = new Queue(queueFood1);
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
 

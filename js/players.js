@@ -13,5 +13,6 @@ class Player extends PIXI.Graphics {
 
     this.x = Math.floor(Math.random() * 60) + 1;
     this.y = Math.floor(Math.random() * 37) + 1;
+
   }
 }
