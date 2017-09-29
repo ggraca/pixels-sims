@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Pixels Place</title>
+      <link rel="icon" href="assets/favicon.ico">
+      <meta name="robots" content="noydir, noodp">
+      <meta name="keywords" content="pixels, camp, place">  
+      <link rel="icon" href="assets/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Press+Start+2P" rel="stylesheet">
+      
+      <link rel="stylesheet" href="css/style.css">
+      
+
+    </head>
+    <body id="body">
+      <div class="info">
+        <img class="head-logo__image u-m-b-20" src="assets/pp_logo.svg">
+        <div class="leaderboard">
+          <p class="text-title u-m-b-20">LEADERBOARD</p>
+          <div class="leaderboard-entry">
+            <p class="leaderboard-entry__name">joaornmarques</p>
+            <p class="leaderboard-entry__score">453</p>
+          </div>
+          <div class="leaderboard-entry">
+            <p class="leaderboard-entry__name">joaornmarques</p>
+            <p class="leaderboard-entry__score">321</p>
+          </div>
+          <div class="leaderboard-entry">
+            <p class="leaderboard-entry__name">joaornmarques</p>
+            <p class="leaderboard-entry__score">222</p>
+          </div>
+          <div class="leaderboard-entry">
+            <p class="leaderboard-entry__name">joaornmarques</p>
+            <p class="leaderboard-entry__score">123</p>
+          </div>
+          <div class="leaderboard-entry">
+            <p class="leaderboard-entry__name">joaornmarques</p>
+            <p class="leaderboard-entry__score">90</p>
+          </div>
+        </div>
+        <!--
+        <div class="wallet">
+          <p class="text-title u-m-b-20">BUY PIXELS</p>
+          <p class="wallet-text u-m-b-20">Transfer to us some of your <i>Pixels Camp</i> EXP to draw more!</p>
+          <p class="wallet-note">WALLET PUBLIC KEY</p>
+          <p class="wallet-key">0x8fe0cE15Ba11663032C74Fe4793395fEF8016d03</p>
+        </div>
+      -->
+      </div>
+      <canvas id="canvas" class="" style="width:1000px; height:500px" width="400" height="200"></canvas>
+      
+      <div class="control">
+        <div class="zoom-control">
+          <p class="text-title">ZOOM</p>
+          <a onClick="zoom1x()" id="zoom-control-1x" class="zoom-control__button zoom-control__button--focus">X1</a>
+          <a onClick="zoom2x()" id="zoom-control-2x" class="zoom-control__button">X2</a>
+          <a onClick="zoom4x()" id="zoom-control-4x" class="zoom-control__button">X4</a>
+        </div>
+        <div class="color-control">
+          <div id="0" class="color-control__button color-0 color-control__button--focus"></div>
+          <div id="1" class="color-control__button color-1"></div>
+          <div id="2" class="color-control__button color-2"></div>
+          <div id="3" class="color-control__button color-3"></div>
+          <div id="4" class="color-control__button color-4"></div>
+          <div id="5" class="color-control__button color-5"></div>
+          <div id="6" class="color-control__button color-6"></div>
+          <div id="7" class="color-control__button color-7"></div>
+          <div id="8" class="color-control__button color-8"></div>
+          <div id="9" class="color-control__button color-9"></div>
+          <div id="10" class="color-control__button color-10"></div>
+          <div id="11" class="color-control__button color-11"></div>
+          <div id="12" class="color-control__button color-12"></div>
+          <div id="13" class="color-control__button color-13"></div>
+          <div id="14" class="color-control__button color-14"></div>
+          <div id="15" class="color-control__button color-15"></div>
+        </div>
+        <div class="pixel-control">
+          <p class="text-title">PIXELS LEFT</p>
+          <p class="pixel-control-value">5</p>
+        </div>
+      </div>
+
+
+      <script src="js/grid.js"></script>
+    </body>
+</html>

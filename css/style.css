@@ -1,0 +1,283 @@
+body{
+	background: url('../assets/pp_logo_back.svg') repeat, #212121;
+  background-size: 190px auto;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+  height: 100%;
+  overflow: visible;
+  min-width: 1380px;
+  min-height: 600px;
+}
+
+h1{
+  font-family: PixelsFont;
+  font-weight: 700;
+}
+
+canvas {
+  margin: 50px;
+  image-rendering: optimizeSpeed;             /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast; /* Safari                        */
+  image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated;                 /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+  box-shadow: 0 0 10px #3a3a3a;
+  min-width: 1000px;
+  min-height: 500px;
+  transform: scale(1);
+}
+
+.canvas-zoom--2x{
+  transform: scale(2);
+  margin: 40px;
+}
+
+.body-zoom--2x{
+  min-width: 4200px;
+  min-height: 1200px;
+  margin: 560px 560px 500px 0;
+}
+
+.canvas-zoom--4x{
+  transform: scale(4);
+  margin: 40px;
+}
+
+.body-zoom--4x{
+  min-width: 16200px;
+  min-height: 8200px;
+  margin: 3060px 0 0 0;
+}
+
+.head-logo{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 20px;
+  left: 20px;
+}
+
+.head-logo__image{
+  width: 160px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.info{
+  align-self: flex-start;
+  margin-top: 50px;
+  background-color: rgba(50,50,50,0.5);
+  width: 200px;
+  padding: 15px;
+}
+
+.leaderboard-entry{
+  padding-bottom: 10px;
+}
+
+.leaderboard-entry__name{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #888;
+  font-size: 12px;
+  margin: 0 0 4px;
+}
+
+.leaderboard-entry__score{
+  font-family: 'Press Start 2P', cursive;
+  color: #E72C36;
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+
+.wallet{
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: solid 2px #444;
+}
+
+.wallet-text{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #888;
+  font-size: 12px;
+  margin: 0 0 4px;
+}
+
+.wallet-note{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #888;
+  font-size: 10px;
+  margin: 0 0 4px;
+}
+
+.wallet-key{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  word-break: break-all;
+  color: #fff;
+  font-size: 12px;
+  margin: 0 0 4px;
+}
+
+.text-title{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+
+.control{
+  position: fixed;
+  width: 500px;
+  background-color: rgba(50,50,50,0.5);
+  bottom: 10px;
+  left: 10px;
+  right: 0;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.zoom-control{
+  font-family: 'Press Start 2P', cursive;
+  width: 160px;
+  float: left;
+}
+
+.zoom-control__button{
+  text-decoration: none;
+  color: #444;
+  font-size: 12px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.zoom-control__button--focus{
+  color: #E72C36;
+  font-size: 16px;
+}
+
+
+
+.color-control{
+  width: 200px;
+  height: 40px;
+  margin-right: 40px;
+  float: left;
+}
+
+.color-control__button{
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  background-color: #1CA8EB;
+  transform: scale(1);
+  float: left;
+  transition: 0.2s;
+}
+
+.color-control__button::hover{
+  opacity: 1;
+}
+
+.color-control__button--focus{
+  opacity: 1;
+  transform: scale(1.4);
+  box-sizing: border-box;
+  border: solid 1px white;
+}
+
+.pixel-control-value{
+  font-family: 'Press Start 2P', cursive;
+  color: #E72C36;
+  font-size: 16px;
+  margin: 0 0 0;
+}
+
+.color-0{
+  background-color: #ffffff;
+  color: #ffffff;
+}
+
+.color-1{
+  background-color: #FBF137; 
+  color: #FBF137; 
+}
+
+.color-2{
+  background-color: #FD6522;
+  color: #FD6522;
+}
+
+.color-3{
+  background-color: #DA111A;
+  color: #DA111A;
+}
+
+.color-4{
+  background-color: #EF1A84;
+  color: #EF1A84;
+}
+
+.color-5{
+  background-color: #4713A2;
+  color: #4713A2;
+}
+
+.color-6{
+  background-color: #071CCF;
+  color: #071CCF;
+}
+
+.color-7{
+  background-color: #1DACE7;
+  color: #1DACE7;
+}
+
+.color-8{
+  background-color: #2BB527;
+  color: #2BB527;
+}
+
+.color-9{
+  background-color: #096318;
+  color: #096318;
+}
+
+.color-10{
+  background-color: #552C0A;
+  color: #552C0A;
+}
+
+.color-11{
+  background-color: #8F713F;
+  color: #8F713F;
+}
+
+.color-12{
+  background-color: #C0C0C0;
+  color: #C0C0C0;
+}
+
+.color-13{
+  background-color: #606060;
+  color: #606060;
+}
+
+.color-14{
+  background-color: #181818;
+  color: #181818; 
+}
+
+.color-15{
+  background-color: #000000;
+  color: #000000;
+}
+
+.u-m-b-20{
+  margin-bottom: 20px;
+}
