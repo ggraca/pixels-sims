@@ -15,8 +15,8 @@ class Player{
       this.graphics.beginFill(0xFF0000);
     this.graphics.drawRect(0, 0, 1, 1);
 
-    this.graphics.x = Math.floor(Math.random() * 60) + 1;
-    this.graphics.y = Math.floor(Math.random() * 37) + 1;
+    this.graphics.x = Math.floor(Math.random() * 60);
+    this.graphics.y = Math.floor(Math.random() * 37);
   }
   goTo(x, y){
     this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: x, y: y})
