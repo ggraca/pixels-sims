@@ -17,10 +17,11 @@ class Player{
 
     this.graphics.x = Math.floor(Math.random() * 60);
     this.graphics.y = Math.floor(Math.random() * 37);
+    console.log("x: " + this.graphics.x + ", y: " + this.graphics.y)
   }
   goTo(x, y){
     this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: x, y: y})
-    //console.log(this.actions)
+    console.log(this.actions)
   }
   move(){
     var dir

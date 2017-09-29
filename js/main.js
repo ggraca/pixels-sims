@@ -9,8 +9,6 @@ var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
 
-var table = new Table(0,0);
-
 var tables = [];
 for(var k = 0; k < 4; k++){
   for(var l = 0; l < 4; l++){
@@ -22,9 +20,9 @@ for(var k = 0; k < 4; k++){
 var playersContainer = new PIXI.Container();
 for (var i = 0; i < 100; i++){
   var player = new Player()
-  if (collider_map[player.x][player.y] == "0") {
+  if (collider_map[player.graphics.x][player.graphics.y] == "0") {
     players.push(player);
-    playersContainer.addChild(player).graphics;
+    playersContainer.addChild(player.graphics);
   }
 }
 var queue = new Queue(queueFood1);
@@ -40,7 +38,7 @@ app.ticker.add(function(delta) {
     return
 
   delay = 0
-  for (var i = 0; i < 100; i++){
+  for (var i = 0; i < players.length; i++){
     players[i].move()
   }
 });

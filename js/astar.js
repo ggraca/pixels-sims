@@ -36,9 +36,10 @@ function getNeighbours(node, end){
       var newx = node.x+i
       var newy = node.y+j
 
-      if(newx < 0 || newx > VENUE_WIDTH) continue
-      if(newy < 0 || newy > VENUE_HEIGHT) continue
+      if(newx < 0 || newx >= VENUE_WIDTH) continue
+      if(newy < 0 || newy >= VENUE_HEIGHT) continue
 
+      if(collider_map[newx][newy] == true) continue
       nodes.push(new Node(newx, newy, node.gscore+1, hcost({x: newx, y: newy}, end), node))
     }
   }
@@ -69,6 +70,7 @@ function astar(start, end){
   visitedNodes = []
 
   while(discoveredNodes.length != 0){
+    //console.log(discoveredNodes.length)
     // Look at availiable nodes and pick the one with better score
     discoveredNodes = discoveredNodes.sort(compareByFscore)
     var currentNode = discoveredNodes[0]
