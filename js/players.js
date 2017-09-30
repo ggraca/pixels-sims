@@ -1,6 +1,7 @@
 class Player{
   constructor() {
     this.graphics = new PIXI.Graphics();
+    this.target = null
     this.actions = []
 
     this.initGraphics()
@@ -24,16 +25,29 @@ class Player{
     console.log(this.actions)
   }
   move(){
-    if(this.actions.length == 0){
-      this.goTo({x: Math.floor(Math.random() * VENUE_WIDTH), y: Math.floor(Math.random() * VENUE_HEIGHT)})
-      while(this.actions === undefined){
-        this.goTo({x: Math.floor(Math.random() * VENUE_WIDTH), y: Math.floor(Math.random() * VENUE_HEIGHT)})
-      }
+    if(this.target){
+      var targetPosition = this.target.getQueuePosition()
+      if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y)
+        return
+      this.goTo(targetPosition)
     }
 
-    var dir = this.actions[0]
-    this.actions.splice(0, 1)
-    this.graphics.x += dir.x
-    this.graphics.y += dir.y
+    if(this.actions.length > 0){
+      var dir = this.actions[0]
+      this.actions.splice(0, 1)
+      this.graphics.x += dir.x
+      this.graphics.y += dir.y
+    }
+
+    if(this.target){
+      var targetPosition = this.target.getQueuePosition()
+      if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y){
+        this.target.addUser(this)
+        this.target = null
+      }
+    }
+  }
+  unlock(){
+    this.target = wc_men
   }
 }

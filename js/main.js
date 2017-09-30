@@ -11,7 +11,8 @@ for (var i = 0; i < 100; i++){
   }
 }
 
-var wc = new WC();
+var wc_men = new WCMen();
+var wc_women = new WCWomen();
 
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
@@ -24,8 +25,12 @@ app.ticker.add(function(delta) {
   if(delay < 10)
     return
 
+  wc_men.update();
+  wc_women.update();
+
   delay = 0
   for (var i = 0; i < players.length; i++){
     players[i].move()
   }
+
 });
