@@ -18,9 +18,11 @@
     </head>
     <body id="body">
       <div class="info">
-        <img class="head-logo__image u-m-b-20" src="assets/pp_logo.svg">
+        <div class="head-logo__image-container">
+          <img class="head-logo__image" src="assets/pp_logo.svg">
+        </div>
+        <p class="text-title u-m-b-20">LEADERBOARD</p>
         <div class="leaderboard">
-          <p class="text-title u-m-b-20">LEADERBOARD</p>
           <div class="leaderboard-entry">
             <p class="leaderboard-entry__name">joaornmarques</p>
             <p class="leaderboard-entry__score">453</p>
@@ -44,7 +46,7 @@
         </div>
       </div>
 
-      <div id="canvas_container" class="" style="width:1000px; height:500px"></div>
+      <div id="canvas_container" class="canvas-container"></div>
 
       <script src="js/pixi.min.js"></script>
       <script src="js/global.js"></script>
