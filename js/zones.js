@@ -9,8 +9,14 @@ class WCWomen extends Zone{
   }
 }
 
+class MainStage extends Zone{
+  constructor(stage_seats){
+    super(stage_seats, [])
+  }
+}
+
 class Table extends Zone{
   constructor(table_seats){
-    super(table_seats, [], 1000, null)
+    super(table_seats, [])
   }
 }

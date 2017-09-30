@@ -9,12 +9,12 @@ function spawnPlayer(x, y){
 
 function getTableSeats(x,y) {
   return [
-    new ActivitySeat({x: x+2, y: y+0}, 1000, null),
-    new ActivitySeat({x: x+4, y: y+0}, 1000, null),
-    new ActivitySeat({x: x+2, y: y+4}, 1000, null),
-    new ActivitySeat({x: x+4, y: y+4}, 1000, null),
-    new ActivitySeat({x: x+0, y: y+2}, 1000, null),
-    new ActivitySeat({x: x+6, y: y+2}, 1000, null)
+    new ActivitySeat({x: x+2, y: y+0}, 200, null),
+    new ActivitySeat({x: x+4, y: y+0}, 200, null),
+    new ActivitySeat({x: x+2, y: y+4}, 200, null),
+    new ActivitySeat({x: x+4, y: y+4}, 200, null),
+    new ActivitySeat({x: x+0, y: y+2}, 200, null),
+    new ActivitySeat({x: x+6, y: y+2}, 200, null)
   ]
 }
 
@@ -29,6 +29,17 @@ function createTables() {
   return tables
 }
 
+function createMainStage(){
+  var seats = []
+  for (var i = 0; i < 12; i++) {
+    for (var j = 0; j < 2; j++) {
+      for (var k = 2+6*j; k <= 5+6*j; k++) {
+        seats.push(new ActivitySeat({x: k, y: 10+2*i}, 300, null))
+      }
+    }
+  }
+  return new MainStage(seats, [])
+}
 
 var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
@@ -37,6 +48,7 @@ var background = PIXI.Sprite.fromImage('assets/background.png')
 wc_men = new WCMen();
 wc_women = new WCWomen();
 tables = createTables();
+main_stage = createMainStage();
 
 var playersContainer = new PIXI.Container();
 var maxParticipants = 116
@@ -46,12 +58,16 @@ app.stage.addChild(playersContainer);
 
 
 // Listen for animate update
+var ticks = 0
+
 var delay = 0;
 app.ticker.add(function(delta) {
   delay += 1
   if(delay < 10)
     return
 
+  console.log("TICKS:" + ticks)
+  ticks += 1
 
   wc_men.update();
   wc_women.update();
