@@ -1,10 +1,3 @@
-function gameLoop(){
-  requestAnimFrame(animate);
-
-	players.update();
-	renderer.render(stage);
-}
-
 var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
@@ -25,7 +18,9 @@ for (var i = 0; i < 100; i++){
     playersContainer.addChild(player.graphics);
   }
 }
-var queue = new Queue(queueFood1);
+
+var wc = new WC();
+
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
 

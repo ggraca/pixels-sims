@@ -15,32 +15,25 @@ class Player{
       this.graphics.beginFill(0xFF0000);
     this.graphics.drawRect(0, 0, 1, 1);
 
-    this.graphics.x = Math.floor(Math.random() * 60);
-    this.graphics.y = Math.floor(Math.random() * 37);
+    this.graphics.x = Math.floor(Math.random() * VENUE_WIDTH);
+    this.graphics.y = Math.floor(Math.random() * VENUE_HEIGHT);
     console.log("x: " + this.graphics.x + ", y: " + this.graphics.y)
   }
-  goTo(x, y){
-    this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: x, y: y})
+  goTo(pos){
+    this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: pos.x, y: pos.y})
     console.log(this.actions)
   }
   move(){
-    var dir
-    if(this.actions.length > 0){
-      dir = this.actions[0]
-      this.actions.splice(0, 1)
-      this.graphics.x += dir.x
-      this.graphics.y += dir.y
+    if(this.actions.length == 0){
+      this.goTo({x: Math.floor(Math.random() * VENUE_WIDTH), y: Math.floor(Math.random() * VENUE_HEIGHT)})
+      while(this.actions === undefined){
+        this.goTo({x: Math.floor(Math.random() * VENUE_WIDTH), y: Math.floor(Math.random() * VENUE_HEIGHT)})
+      }
     }
-    // else{
-    //   dir = Math.floor(Math.random() * 4)
-    //   if(dir == 0)
-    //     this.graphics.y += 1
-    //   else if(dir == 1)
-    //     this.graphics.x += 1;
-    //   else if(dir == 2)
-    //     this.graphics.y -= 1;
-    //   else
-    //     this.graphics.x -= 1
-    // }
+
+    var dir = this.actions[0]
+    this.actions.splice(0, 1)
+    this.graphics.x += dir.x
+    this.graphics.y += dir.y
   }
 }
