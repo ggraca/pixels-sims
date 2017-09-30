@@ -6,8 +6,8 @@ body{
 	justify-content: center;
   height: 100%;
   overflow: visible;
-  min-width: 1380px;
-  min-height: 600px;
+	padding: 50px;
+	margin: 0;
 }
 
 h1{
@@ -16,7 +16,6 @@ h1{
 }
 
 canvas {
-  margin: 50px;
   image-rendering: optimizeSpeed;             /* Older versions of FF          */
   image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
   image-rendering: -webkit-optimize-contrast; /* Safari                        */
@@ -24,53 +23,76 @@ canvas {
   image-rendering: pixelated;                 /* Awesome future-browsers       */
   -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
   box-shadow: 0 0 10px #3a3a3a;
-  min-width: 1000px;
-  min-height: 500px;
+  width: 100%;
   transform: scale(1);
 }
 
-.canvas-zoom--2x{
-  transform: scale(2);
-  margin: 40px;
+.canvas-container {
+	margin-left: 25px;
 }
 
-.body-zoom--2x{
-  min-width: 4200px;
-  min-height: 1200px;
-  margin: 560px 560px 500px 0;
-}
-
-.canvas-zoom--4x{
-  transform: scale(4);
-  margin: 40px;
-}
-
-.body-zoom--4x{
-  min-width: 16200px;
-  min-height: 8200px;
-  margin: 3060px 0 0 0;
-}
-
-.head-logo{
-  position: absolute;
-  display: flex;
-  align-items: center;
-  top: 20px;
-  left: 20px;
-}
-
-.head-logo__image{
-  width: 160px;
-  margin-left: 20px;
-  margin-top: 20px;
+.head-logo__image-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .info{
   align-self: flex-start;
-  margin-top: 50px;
+	justify-content: center;
   background-color: rgba(50,50,50,0.5);
-  width: 200px;
   padding: 15px;
+	padding-left: 25px;
+	margin-right: 25px;
+	box-sizing: border-box;
+}
+
+@media screen and (max-width: 815px) {
+    body {
+      padding: 0px;
+			flex-direction: column;
+    }
+		.info {
+			width: 100%;
+			margin-bottom: 50px;
+			margin-top: 50px;
+		}
+		.canvas-container {
+			width: 100%;
+			margin: 0;
+		}
+		.head-logo__image {
+			width: 40%;
+		}
+		.leaderboard {
+			flex-direction: row;
+		}
+		.leaderboard-entry {
+			padding-right: 20px;
+		}
+}
+@media screen and (min-width: 815px) {
+    body {
+      padding: 50px;
+			flex-direction: row;
+    }
+		.info {
+			width: 20%;
+		}
+		.canvas-container {
+			width: 80%;
+		}
+		.head-logo__image {
+			width: 80%;
+		}
+		.leaderboard {
+			flex-direction: column;
+		}
+}
+
+.leaderboard {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .leaderboard-entry{
@@ -204,8 +226,8 @@ canvas {
 }
 
 .color-1{
-  background-color: #FBF137; 
-  color: #FBF137; 
+  background-color: #FBF137;
+  color: #FBF137;
 }
 
 .color-2{
@@ -270,7 +292,7 @@ canvas {
 
 .color-14{
   background-color: #181818;
-  color: #181818; 
+  color: #181818;
 }
 
 .color-15{

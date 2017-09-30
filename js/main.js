@@ -3,9 +3,13 @@ document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
 
 var playersContainer = new PIXI.Container();
-for (var i = 0; i < 100; i++){
+var maxParticipants = 100
+for (var i = 0; i < maxParticipants; i++){
   var player = new Player()
   if (collider_map[player.graphics.x][player.graphics.y] == "0") {
+    if (i == maxParticipants-1) {
+      player.changeColor(0xFF00FF);
+    }
     players.push(player);
     playersContainer.addChild(player.graphics);
   }
