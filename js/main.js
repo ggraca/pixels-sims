@@ -39,7 +39,7 @@ wc_women = new WCWomen();
 tables = createTables();
 
 var playersContainer = new PIXI.Container();
-var maxParticipants = 116
+var maxParticipants = 0
 
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
