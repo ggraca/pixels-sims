@@ -48,8 +48,12 @@ class Player{
     this.needs -= 1
   }
   decideTarget(){
-    if(this.hunger < 20 || this.fun < 20 || this.needs < 20)
-      return this.setTarget(main_stage)
+    if(this.hunger < 20 || this.fun < 20 || this.needs < 20){
+      if (wc_men.getQueuePosition()) {
+        this.setTarget(wc_men)
+      }
+      return
+    }
 
     if(this.target != null && this.target.getQueuePosition() != null)
       return
@@ -70,6 +74,7 @@ class Player{
     if(this.target == null) return
 
     var targetPosition = this.target.getQueuePosition()
+    if (targetPosition == null) return
     if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y){
       this.target.addUser(this)
       this.target = null

@@ -66,7 +66,7 @@ for (var i = 29; i >= 27; i--) {
 
 queueWC_men = [];
 for (var i = 21; i >= 19; i--) {
-  queueWC_men.push({x:55,y:i});
+  queueWC_men.push(new Seat({x:55,y:i}));
 }
 
 queueStage2 = [];

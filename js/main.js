@@ -29,6 +29,24 @@ function createTables() {
   return tables
 }
 
+function getWCMenSeats(){
+  var seats = []
+  for (var i = 0; i < 4; i++) {
+    seats.push(new ActivitySeat({x:58, y:25 +i}, 300, null))
+  }
+  return seats
+}
+
+function getWCWomenSeats(){
+  var seats = []
+  for (var i = 0; i < 4; i++) {
+    seats.push(new ActivitySeat({x:58, y:31 +i}, 300, null))
+  }
+  return seats
+}
+
+
+
 function createMainStage(){
   var seats = []
   for (var i = 0; i < 12; i++) {
@@ -45,8 +63,10 @@ var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
 
-wc_men = new WCMen();
-wc_women = new WCWomen();
+
+
+wc_men = new WCMen(getWCMenSeats(),queueWC_men);
+wc_women = new WCWomen(getWCMenSeats(),[]);
 tables = createTables();
 main_stage = createMainStage();
 

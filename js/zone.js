@@ -82,6 +82,10 @@ class Zone {
       this.seats[i].update()
     }
 
+    if (this.queue_seats.length == 0) {
+      return
+    }
+
     // Handle new availabilities
     for(i = 0; i < this.seats.length; i++){
       var seat = this.seats[i]
