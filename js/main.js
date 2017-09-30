@@ -71,7 +71,7 @@ tables = createTables();
 main_stage = createMainStage();
 
 var playersContainer = new PIXI.Container();
-var maxParticipants = 0
+var maxParticipants = 114
 
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
@@ -81,6 +81,16 @@ app.stage.addChild(playersContainer);
 var ticks = 0
 
 var delay = 0;
+var seconds = 0
+var minutes = 0
+var hours = 0
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 app.ticker.add(function(delta) {
   delay += 1
   if(delay < 10)
@@ -88,6 +98,21 @@ app.ticker.add(function(delta) {
 
   console.log("TICKS:" + ticks)
   ticks += 1
+
+  seconds += 5
+  if (seconds == 60) {
+    minutes += 1
+    seconds = 0
+  }
+
+  if (minutes == 60) {
+    hours += 1
+    minutes = 0
+  }
+
+  document.getElementById("timer_seconds").innerHTML = pad(seconds, 2)
+  document.getElementById("timer_minutes").innerHTML = pad(minutes, 2)
+  document.getElementById("timer_hours").innerHTML = pad(hours, 2)
 
   wc_men.update();
   wc_women.update();
