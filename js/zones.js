@@ -18,11 +18,18 @@ class MainStage extends Zone{
 class Table extends Zone{
   constructor(table_seats){
     super(table_seats, [])
+    this.players_count = 0
   }
 }
 
 class Sponsors extends Zone{
   constructor(sponsors_seats){
     super(sponsors_seats, [])
+  }
+}
+
+class Kitchen extends Zone{
+  constructor(kitchen_seats){
+    super(kitchen_seats, [])
   }
 }

@@ -45,19 +45,23 @@ class Player{
     this.target = zone
   }
   updateHealth(){
-    this.hunger -= 1
-    this.fun -= 1
-    this.needs -= 1
+    this.hunger -= 0.1
+    this.fun -= 0.1
+    this.needs -= 0.1
   }
   decideTarget(){
     if(this.locked)
       return
 
-    if(this.hunger < 20 || this.fun < 20 || this.needs < 20){
-      if (!wc_men.isFull()) {
-        this.setTarget(wc_men)
-      }
-    }
+    if(this.hunger < 20 && !kitchen.isFull())
+      this.setTarget(kitchen)
+
+    if(this.needs < 20 && !wc_men.isFull())
+      this.setTarget(wc_men)
+
+    // if(this.fun < 20 && !main_stage.isFull())
+    //   this.setTarget(main_stage)
+
 
     if(this.target != null && !this.target.isFull())
       return
@@ -67,12 +71,14 @@ class Player{
       var tables_temp = [].concat(tables)
       shuffle(tables_temp)
       for (var i = 0; i < tables_temp.length; i++) {
+        if(tables_temp[i].players_count == 6) continue
         if(tables_temp[i].getNewSeat() == null) continue
         return this.setTarget(tables_temp[i])
       }
     }
 
-    if(this.previous_target == "MainStage")
+    var rand = getRandomInt(0, 30)
+    if(rand < 23)
       return this.setTarget(this.table)
     else/* if (previous_target == "Table") */{
       return this.setTarget(main_stage)
@@ -83,8 +89,10 @@ class Player{
     if(this.target == null || this.target_seat == null) return
     if(this.graphics.x == this.target_seat.position.x && this.graphics.y == this.target_seat.position.y){
 
-      if(this.target.constructor.name == "Table" && this.table == null)
+      if(this.target.constructor.name == "Table" && this.table == null){
         this.table = this.target
+        this.table.players_count += 1
+      }
 
       this.previous_target = this.target.constructor.name
       this.target.addUser(this)

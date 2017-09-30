@@ -9,12 +9,12 @@ function spawnPlayer(x, y){
 
 function getTableSeats(x,y) {
   return [
-    new ActivitySeat({x: x+2, y: y+0}, 500 + getRandomInt(-300, 300), null),
-    new ActivitySeat({x: x+4, y: y+0}, 500 + getRandomInt(-300, 300), null),
-    new ActivitySeat({x: x+2, y: y+4}, 500 + getRandomInt(-300, 300), null),
-    new ActivitySeat({x: x+4, y: y+4}, 500 + getRandomInt(-300, 300), null),
-    new ActivitySeat({x: x+0, y: y+2}, 500 + getRandomInt(-300, 300), null),
-    new ActivitySeat({x: x+6, y: y+2}, 500 + getRandomInt(-300, 300), null)
+    new ActivitySeat({x: x+2, y: y+0}, 200 + getRandomInt(-180, 180), null),
+    new ActivitySeat({x: x+4, y: y+0}, 200 + getRandomInt(-180, 180), null),
+    new ActivitySeat({x: x+2, y: y+4}, 200 + getRandomInt(-180, 180), null),
+    new ActivitySeat({x: x+4, y: y+4}, 200 + getRandomInt(-180, 180), null),
+    new ActivitySeat({x: x+0, y: y+2}, 200 + getRandomInt(-180, 180), null),
+    new ActivitySeat({x: x+6, y: y+2}, 200 + getRandomInt(-180, 180), null)
   ]
 }
 
@@ -31,20 +31,26 @@ function createTables() {
 
 function getWCMenSeats(){
   var seats = []
-  for (var i = 0; i < 4; i++) {
-    seats.push(new ActivitySeat({x:58, y:25 +i}, 300, null))
+  for (var i = 0; i < 5; i++) {
+    seats.push(new ActivitySeat({x:58, y:25 +i}, 50, null))
   }
   return seats
 }
 
 function getWCWomenSeats(){
   var seats = []
-  for (var i = 0; i < 4; i++) {
-    seats.push(new ActivitySeat({x:58, y:31 +i}, 300, null))
+  for (var i = 0; i < 5; i++) {
+    seats.push(new ActivitySeat({x:58, y:31 +i}, 50, null))
   }
   return seats
 }
-
+function getKitchenSeats(){
+  var seats = []
+  for (var i = 0; i < 12; i+=2) {
+    seats.push(new ActivitySeat({x:58, y:4 +i}, 50, null))
+  }
+  return seats
+}
 
 
 function createMainStage(){
@@ -65,8 +71,9 @@ var background = PIXI.Sprite.fromImage('assets/background.png')
 
 
 
-wc_men = new WCMen(getWCMenSeats(),queueWC_men);
+wc_men = new WCMen(getWCMenSeats(), []);
 wc_women = new WCWomen(getWCMenSeats(),[]);
+kitchen = new Kitchen(getKitchenSeats(),[]);
 tables = createTables();
 main_stage = createMainStage();
 
@@ -117,6 +124,7 @@ app.ticker.add(function(delta) {
 
   wc_men.update();
   wc_women.update();
+  kitchen.update();
   main_stage.update();
 
   for (var i = 0; i < tables.length; i++){
