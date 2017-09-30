@@ -39,7 +39,9 @@ function getNeighbours(node, end){
       if(newx < 0 || newx >= VENUE_WIDTH) continue
       if(newy < 0 || newy >= VENUE_HEIGHT) continue
 
-      if(collider_map[newx][newy] == true) continue
+      if(newx != end.x || newy != end.y){
+        if(collider_map[newx][newy] == true) continue
+      }
       nodes.push(new Node(newx, newy, node.gscore+1, hcost({x: newx, y: newy}, end), node))
     }
   }

@@ -98,6 +98,14 @@ class Zone {
     }
   }
   getQueuePosition(){
+    if(this.queue_seats.length == 0){
+      for (var i = 0; i < this.seats.length; i++) {
+        var seat = this.seats[i]
+        if(seat.available()) return seat.position
+      }
+      return null
+    }
+
     for (var i = 0; i < this.queue_seats.length; i++) {
       var seat = this.queue_seats[i]
       if(seat.available()) return seat.position
@@ -105,15 +113,4 @@ class Zone {
     return null
   }
 
-}
-
-class WCMen extends Zone{
-  constructor(){
-    super([new ActivitySeat({x: 57, y: 27}, 10, null)],[new Seat({x: 52, y: 27})])
-  }
-}
-class WCWomen extends Zone{
-  constructor(){
-    super([new ActivitySeat({x: 57, y: 20}, 10, null)],[new Seat({x: 52, y: 20})])
-  }
 }

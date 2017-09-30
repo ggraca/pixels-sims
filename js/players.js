@@ -28,7 +28,6 @@ class Player{
   }
   goTo(pos){
     this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: pos.x, y: pos.y})
-    //console.log(this.actions)
   }
   move(){
     if(this.target){
@@ -47,6 +46,7 @@ class Player{
 
     if(this.target){
       var targetPosition = this.target.getQueuePosition()
+      //console.log(targetPosition)
       if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y){
         this.target.addUser(this)
         this.target = null

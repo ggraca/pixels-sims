@@ -13,6 +13,7 @@ for(var x = 0; x < VENUE_WIDTH; x++){
 var stage;
 var wc_men;
 var wc_women;
+var tables = [];
 var sponsors = [];
 var players = [];
 
