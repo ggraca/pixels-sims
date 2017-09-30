@@ -49,6 +49,12 @@ class Zone {
     this.seats = seats
     this.queue_seats = queue_seats
   }
+  isFull(){
+    for (var i = 0; i < this.seats.length; i++) {
+      if(this.seats[i].available()) return false
+    }
+    return true
+  }
   addUser(user) {
     for(var i = 0; i < this.seats.length; i++){
       var seat = this.seats[i]

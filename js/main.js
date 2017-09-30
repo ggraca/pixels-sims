@@ -1,3 +1,12 @@
+function spawnPlayer(x, y){
+  var player = new Player()
+  player.graphics.x = x
+  player.graphics.y = y
+  //player.changeColor(0xFF00FF);
+  players.push(player);
+  playersContainer.addChild(player.graphics);
+}
+
 function getTableSeats(x,y) {
   return [
     new ActivitySeat({x: x+2, y: y+0}, 1000, null),
@@ -25,24 +34,12 @@ var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
 
-var playersContainer = new PIXI.Container();
-var maxParticipants = 100
-for (var i = 0; i < maxParticipants; i++){
-  var player = new Player()
-  if (collider_map[player.graphics.x][player.graphics.y] == "0") {
-    if (i == maxParticipants-1) {
-      player.changeColor(0xFF00FF);
-    }
-    players.push(player);
-    playersContainer.addChild(player.graphics);
-  }
-}
-
 wc_men = new WCMen();
 wc_women = new WCWomen();
 tables = createTables();
 
-
+var playersContainer = new PIXI.Container();
+var maxParticipants = 116
 
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
@@ -55,12 +52,21 @@ app.ticker.add(function(delta) {
   if(delay < 10)
     return
 
+
   wc_men.update();
   wc_women.update();
 
   delay = 0
   for (var i = 0; i < players.length; i++){
     players[i].move()
+  }
+
+  if(players.length < maxParticipants){
+    spawnPlayer(26, 36)
+    spawnPlayer(28, 36)
+    spawnPlayer(30, 36)
+    spawnPlayer(32, 36)
+    spawnPlayer(34, 36)
   }
 
 });

@@ -7,8 +7,10 @@ class Player{
     this.coding = null
     this.design = null
     this.charm = null
+    this.project = null
     this.generateStats()
     this.initGraphics()
+    this.findTarget()
   }
   initGraphics(){
     var stats = [this.coding, this.design, this.charm]
@@ -29,11 +31,18 @@ class Player{
   goTo(pos){
     this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: pos.x, y: pos.y})
   }
+  findTarget(){
+    do{
+      var index = Math.floor(Math.random() * 16)
+      this.target = tables[index]
+    } while(this.target.getQueuePosition() == null)
+  }
   move(){
     if(this.target){
       var targetPosition = this.target.getQueuePosition()
-      if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y)
-        return
+      if(targetPosition == null)
+        this.findTarget()
+      targetPosition = this.target.getQueuePosition()
       this.goTo(targetPosition)
     }
 
