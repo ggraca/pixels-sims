@@ -9,12 +9,12 @@ function spawnPlayer(x, y){
 
 function getTableSeats(x,y) {
   return [
-    new ActivitySeat({x: x+2, y: y+0}, 200, null),
-    new ActivitySeat({x: x+4, y: y+0}, 200, null),
-    new ActivitySeat({x: x+2, y: y+4}, 200, null),
-    new ActivitySeat({x: x+4, y: y+4}, 200, null),
-    new ActivitySeat({x: x+0, y: y+2}, 200, null),
-    new ActivitySeat({x: x+6, y: y+2}, 200, null)
+    new ActivitySeat({x: x+2, y: y+0}, 500 + getRandomInt(-300, 300), null),
+    new ActivitySeat({x: x+4, y: y+0}, 500 + getRandomInt(-300, 300), null),
+    new ActivitySeat({x: x+2, y: y+4}, 500 + getRandomInt(-300, 300), null),
+    new ActivitySeat({x: x+4, y: y+4}, 500 + getRandomInt(-300, 300), null),
+    new ActivitySeat({x: x+0, y: y+2}, 500 + getRandomInt(-300, 300), null),
+    new ActivitySeat({x: x+6, y: y+2}, 500 + getRandomInt(-300, 300), null)
   ]
 }
 
@@ -23,7 +23,7 @@ function createTables() {
   for(var k = 0; k < 4; k++){
     for(var l = 0; l < 4; l++){
       var table_seats = getTableSeats(17+9*k,9+7*l);
-      tables.push(new Table(table_seats, [{x:17, y:9}]));
+      tables.push(new Table(table_seats, []));
     }
   }
   return tables
@@ -34,11 +34,11 @@ function createMainStage(){
   for (var i = 0; i < 12; i++) {
     for (var j = 0; j < 2; j++) {
       for (var k = 2+6*j; k <= 5+6*j; k++) {
-        seats.push(new ActivitySeat({x: k, y: 10+2*i}, 300, null))
+        seats.push(new ActivitySeat({x: k, y: 10+2*i}, 80 + getRandomInt(-30, 30), null))
       }
     }
   }
-  return new MainStage(seats, [])
+  return new MainStage(shuffle(seats), [])
 }
 
 var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
@@ -51,7 +51,7 @@ tables = createTables();
 main_stage = createMainStage();
 
 var playersContainer = new PIXI.Container();
-var maxParticipants = 116
+var maxParticipants = 90
 
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
@@ -63,16 +63,21 @@ var ticks = 0
 var delay = 0;
 app.ticker.add(function(delta) {
   delay += 1
-  if(delay < 10)
+  if(delay < 2)
     return
+  delay = 0
 
   console.log("TICKS:" + ticks)
   ticks += 1
 
   wc_men.update();
   wc_women.update();
+  main_stage.update();
 
-  delay = 0
+  for (var i = 0; i < tables.length; i++){
+    tables[i].update()
+  }
+
   for (var i = 0; i < players.length; i++){
     players[i].move()
   }

@@ -31,7 +31,7 @@ class ActivitySeat extends Seat{
   }
   onUserRemove(){
     //bonus_function(this.user)
-    this.user.unlock()
+    this.user.locked = false
   }
   update(){
     if(this.user === null)
@@ -59,6 +59,7 @@ class Zone {
     for(var i = 0; i < this.seats.length; i++){
       var seat = this.seats[i]
       if(seat.available()){
+        user.locked = true
         seat.assignUser(user)
         return true
       }
@@ -67,6 +68,7 @@ class Zone {
     for(var i = 0; i < this.queue_seats.length; i++){
       var seat = this.queue_seats[i]
       if(seat.available()){
+        user.locked = true
         seat.assignUser(user)
         return true
       }
@@ -78,9 +80,10 @@ class Zone {
     var i;
 
     // ActivitySeats
-    for (i = 0; i < this.seats.length; i++) {
+    for (i = 0; i < this.seats.length; i++)
       this.seats[i].update()
-    }
+
+    if(this.queue_seats.length == 0) return
 
     // Handle new availabilities
     for(i = 0; i < this.seats.length; i++){
@@ -93,9 +96,9 @@ class Zone {
     }
 
     // Recreate queue
-    for(i = 0; i < this.seats.length-1; i++){
-      var seat = this.seats[i]
-      var previous_seat = this.seats[i+1]
+    for(i = 0; i < this.queue_seats.length-1; i++){
+      var seat = this.queue_seats[i]
+      var previous_seat = this.queue_seats[i+1]
       if(seat.available() && !previous_seat.available()){
         var user = previous_seat.user
         previous_seat.removeUser()
@@ -103,18 +106,21 @@ class Zone {
       }
     }
   }
-  getQueuePosition(){
+  getNewSeat(){
     if(this.queue_seats.length == 0){
-      for (var i = 0; i < this.seats.length; i++) {
-        var seat = this.seats[i]
-        if(seat.available()) return seat.position
+      var temp_seats = [].concat(this.seats)
+      shuffle(temp_seats)
+
+      for (var i = 0; i < temp_seats.length; i++) {
+        var seat = temp_seats[i]
+        if(seat.available()) return seat
       }
       return null
     }
 
     for (var i = 0; i < this.queue_seats.length; i++) {
       var seat = this.queue_seats[i]
-      if(seat.available()) return seat.position
+      if(seat.available()) return seat
     }
     return null
   }

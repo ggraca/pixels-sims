@@ -2,7 +2,11 @@ class Player{
   constructor() {
     this.graphics = new PIXI.Graphics();
     this.target = null
+    this.previous_seat = null
+    this.target_seat = null
     this.actions = []
+    this.locked = false
+    this.table = null
 
     this.niceness = null
     this.coding = null
@@ -39,8 +43,6 @@ class Player{
   }
   setTarget(zone){
     this.target = zone
-    var targetPosition = this.target.getQueuePosition()
-    this.goTo(targetPosition)
   }
   updateHealth(){
     this.hunger -= 1
@@ -48,39 +50,62 @@ class Player{
     this.needs -= 1
   }
   decideTarget(){
+    if(this.locked)
+      return
+
     if(this.hunger < 20 || this.fun < 20 || this.needs < 20)
       return this.setTarget(main_stage)
 
-    if(this.target != null && this.target.getQueuePosition() != null)
+    if(this.target != null && !this.target.isFull())
       return
 
-    // Find Table
-    var tables_temp = [].concat(tables)
-    shuffle(tables_temp)
-    for (var i = 0; i < tables_temp.length; i++) {
-      if(tables_temp[i].getQueuePosition() == null) continue
-      return this.setTarget(tables_temp[i])
+    if(this.table == null){
+      // Find Table
+      var tables_temp = [].concat(tables)
+      shuffle(tables_temp)
+      for (var i = 0; i < tables_temp.length; i++) {
+        if(tables_temp[i].getNewSeat() == null) continue
+        return this.setTarget(tables_temp[i])
+      }
     }
 
-    // if(this.target == null)
-    //   return this.setTarget(main_stage)
+    if(this.previous_target == "MainStage")
+      return this.setTarget(this.table)
+    else/* if (previous_target == "Table") */{
+      return this.setTarget(main_stage)
+    }
 
   }
   targetReached(){
-    if(this.target == null) return
+    if(this.target == null || this.target_seat == null) return
+    if(this.graphics.x == this.target_seat.position.x && this.graphics.y == this.target_seat.position.y){
 
-    var targetPosition = this.target.getQueuePosition()
-    if(this.graphics.x == targetPosition.x && this.graphics.y == targetPosition.y){
+      if(this.target.constructor.name == "Table" && this.table == null)
+        this.table = this.target
+
+      this.previous_target = this.target.constructor.name
       this.target.addUser(this)
       this.target = null
     }
   }
+  decideMoves(){
+    if(this.locked)
+      return
+
+    if(this.target == null || this.target.isFull()) return
+
+    if(this.target_seat == null || !this.target_seat.available())
+      this.target_seat = this.target.getNewSeat()
+
+    this.goTo(this.target_seat.position)
+  }
   move(){
-    if(players.indexOf(this) == 1)
-      console.log(this.target)
+    // if(players.indexOf(this) == 1)
+    //   console.log(this.target)
 
     this.updateHealth()
     this.decideTarget()
+    this.decideMoves()
 
     if(this.actions.length > 0){
       var dir = this.actions[0]
@@ -90,9 +115,6 @@ class Player{
     }
 
     this.targetReached()
-  }
-  unlock(){
-    this.target = wc_men
   }
   generateStats(){
     var nD = Math.random()
