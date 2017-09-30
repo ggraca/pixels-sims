@@ -1,11 +1,11 @@
 class WCMen extends Zone{
-  constructor(){
-    super([new ActivitySeat({x: 57, y: 27}, 10, null)],[new Seat({x: 52, y: 27})])
+  constructor(wcmen_seats,queue_seats){
+    super(wcmen_seats, queue_seats)
   }
 }
 class WCWomen extends Zone{
-  constructor(){
-    super([new ActivitySeat({x: 57, y: 20}, 10, null)],[new Seat({x: 52, y: 20})])
+  constructor(wcwomen_seats){
+    super(wcwomen_seats, [])
   }
 }
 
@@ -18,5 +18,11 @@ class MainStage extends Zone{
 class Table extends Zone{
   constructor(table_seats){
     super(table_seats, [])
+  }
+}
+
+class Sponsors extends Zone{
+  constructor(sponsors_seats){
+    super(sponsors_seats, [])
   }
 }

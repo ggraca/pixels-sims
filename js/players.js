@@ -53,8 +53,11 @@ class Player{
     if(this.locked)
       return
 
-    if(this.hunger < 20 || this.fun < 20 || this.needs < 20)
-      return this.setTarget(main_stage)
+    if(this.hunger < 20 || this.fun < 20 || this.needs < 20){
+      if (!wc_men.isFull()) {
+        this.setTarget(wc_men)
+      }
+    }
 
     if(this.target != null && !this.target.isFull())
       return
