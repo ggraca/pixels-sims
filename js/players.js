@@ -33,9 +33,19 @@ class Player{
       this.graphics.beginFill(0x00FF00);
     this.graphics.drawRect(0, 0, 1, 1);
 
+    this.graphics.hitArea = new PIXI.Rectangle(0, 0, 1, 1);
+    this.graphics.interactive = true
+
+    var that = this
+    this.graphics.click = function(){
+      showDataForUser(that)
+    }
+
+
     this.graphics.x = Math.floor(Math.random() * VENUE_WIDTH);
     this.graphics.y = Math.floor(Math.random() * VENUE_HEIGHT);
     //console.log("x: " + this.graphics.x + ", y: " + this.graphics.y)
+
   }
 
   goTo(pos){

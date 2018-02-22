@@ -68,6 +68,10 @@ function createMainStage(){
 var app = new PIXI.Application(60, 37, {backgroundColor : 0x111111});
 document.getElementById("canvas_container").appendChild(app.view);
 var background = PIXI.Sprite.fromImage('assets/background.png')
+background.interactive = true
+background.click = function(){
+  showDataForUser(null)
+}
 
 
 
@@ -83,10 +87,11 @@ var maxParticipants = 90
 app.stage.addChild(background);
 app.stage.addChild(playersContainer);
 
+var selected_user = null
+
 
 // Listen for animate update
-var ticks = 0
-
+var speed = 30;
 var delay = 0;
 var seconds = 0
 var minutes = 0
@@ -98,14 +103,12 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
+
 app.ticker.add(function(delta) {
   delay += 1
-  if(delay < 2)
+  if(delay < 100/speed)
     return
   delay = 0
-
-  console.log("TICKS:" + ticks)
-  ticks += 1
 
   seconds += 5
   if (seconds == 60) {
@@ -116,6 +119,12 @@ app.ticker.add(function(delta) {
   if (minutes == 60) {
     hours += 1
     minutes = 0
+  }
+
+  if(selected_user !== null){
+    document.getElementById("hunger_value").innerHTML = Math.round(selected_user.hunger)
+    document.getElementById("needs_value").innerHTML = Math.round(selected_user.needs)
+    document.getElementById("fun_value").innerHTML = Math.round(selected_user.fun)
   }
 
   document.getElementById("timer_seconds").innerHTML = pad(seconds, 2)
