@@ -9,7 +9,6 @@
       <link rel="icon" href="assets/favicon.ico">
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Press+Start+2P" rel="stylesheet">
 
       <link rel="stylesheet" href="css/style.css">
@@ -46,39 +45,15 @@
           <p class="text-title u-m-b-20">Player #14</p>
           <div class="leaderboard">
             <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">niceness</p>
-              <p class="leaderboard-entry__score" id="niceness_value">0</p>
+              <p class="leaderboard-entry__name">kills</p>
+              <p class="leaderboard-entry__score" id="kills">0</p>
             </div>
             <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">coding skill</p>
-              <p class="leaderboard-entry__score" id="coding_value">0</p>
-            </div>
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">design skill</p>
-              <p class="leaderboard-entry__score" id="design_value">0</p>
-            </div>
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">charm</p>
-              <p class="leaderboard-entry__score" id="charm_value">0</p>
+              <p class="leaderboard-entry__name">resources</p>
+              <p class="leaderboard-entry__score" id="resources">0</p>
             </div>
           </div>
           <div class="leaderboard">
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">hunger</p>
-              <p class="leaderboard-entry__score" id="hunger_value">0</p>
-            </div>
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">needs</p>
-              <p class="leaderboard-entry__score" id="needs_value">0</p>
-            </div>
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">fun</p>
-              <p class="leaderboard-entry__score" id="fun_value">0</p>
-            </div>
-            <div class="leaderboard-entry">
-              <p class="leaderboard-entry__name">focus</p>
-              <p class="leaderboard-entry__score" id="focus_value">0</p>
-            </div>
           </div>
         </div>
       </div>
@@ -87,13 +62,13 @@
 
       <div id="canvas_container" class="canvas-container"></div>
 
+      <script src="js/jquery-3.3.1.min.js"></script>
       <script src="js/pixi.min.js"></script>
       <script src="js/global.js"></script>
       <script src="js/input.js"></script>
       <script src="js/astar.js"></script>
-      <script src="js/colliders.js"></script>
-      <script src="js/zone.js"></script>
-      <script src="js/zones.js"></script>
+      <script src="js/terrain.js"></script>
+      <script src="js/storm.js"></script>
       <script src="js/players.js"></script>
       <script src="js/phase1.js"></script>
       <script src="js/main.js"></script>

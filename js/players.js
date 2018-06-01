@@ -1,36 +1,23 @@
+function spawnPlayer(x, y){
+  var player = new Player()
+  player.graphics.x = x
+  player.graphics.y = y
+  players.push(player);
+  playersContainer.addChild(player.graphics);
+}
+
 class Player{
   constructor() {
     this.graphics = new PIXI.Graphics();
-    this.target = null
-    this.previous_seat = null
-    this.target_seat = null
     this.actions = []
-    this.locked = false
-    this.table = null
+    this.target = null
+    this.kills = 0
+    this.resources = 0
 
-    this.niceness = null
-    this.coding = null
-    this.design = null
-    this.charm = null
-
-    this.exp = 1000
-    this.hunger = getRandomInt(50, 100) * 1.0
-    this.fun = getRandomInt(50, 100) * 1.0
-    this.needs = getRandomInt(50, 100) * 1.0
-
-    this.generateStats()
     this.initGraphics()
   }
   initGraphics(){
-    var stats = [this.coding, this.design, this.charm]
-    var color = stats.indexOf(Math.max(...stats))
-    Math.floor(Math.random() * 100);
-    if(color == 0)
-      this.graphics.beginFill(0xFF0000);
-    else if (color == 1)
-      this.graphics.beginFill(0xFFFF00);
-    else
-      this.graphics.beginFill(0x00FF00);
+    this.graphics.beginFill(0xFF00FF);
     this.graphics.drawRect(0, 0, 1, 1);
 
     this.graphics.hitArea = new PIXI.Rectangle(0, 0, 1, 1);
@@ -40,93 +27,128 @@ class Player{
     this.graphics.click = function(){
       showDataForUser(that)
     }
-
-
-    this.graphics.x = Math.floor(Math.random() * VENUE_WIDTH);
-    this.graphics.y = Math.floor(Math.random() * VENUE_HEIGHT);
-    //console.log("x: " + this.graphics.x + ", y: " + this.graphics.y)
-
   }
+  die(){
+    var index = players.indexOf(this)
 
+    this.graphics.parent.removeChild(this.graphics)
+    delete this
+
+    players.splice(index, 1);
+  }
   goTo(pos){
     this.actions = astar({x: this.graphics.x, y: this.graphics.y}, {x: pos.x, y: pos.y})
+    if(this.actions == undefined) this.actions = []
+    this.target = pos
   }
-  setTarget(zone){
-    this.target = zone
+  findPointInEye(eye){
+    this.actions = []
+    do{
+      var pos = eye.randomPoint()
+      if(pos.x < 0) continue
+      if(pos.x >= VENUE_WIDTH) continue
+      if(pos.y < 0) continue
+      if(pos.y >= VENUE_HEIGHT) continue
+
+      this.goTo(pos)
+    }while(this.actions.length == 0)
   }
-  updateHealth(){
-    this.hunger -= 0.1
-    this.fun -= 0.1
-    this.needs -= 0.1
+  findTerrain(){
+    // Get out of the storm
+    if (!storm.current.isPointInside(this.graphics.x, this.graphics.y)){
+      this.findPointInEye(storm.next)
+      return true
+    }
+
+    if (storm.waiting)
+      return false
+
+    if(!storm.next.isPointInside(this.graphics.x, this.graphics.y)){
+      this.findPointInEye(storm.next)
+      return true
+    }
+
+    return false
+  }
+  findPlayer(){
+    var r  = 10
+
+    for (var i = 0; i < players.length; i++){
+      if (players[i] == this)
+        continue
+
+      var d = distance(this.graphics.x, this.graphics.y, players[i].graphics.x, players[i].graphics.y)
+      if(d > r)
+        continue
+
+      if(getRandomInt(0, 2) == 0){
+        players[i].kills++
+        this.die()
+      }
+      else{
+        this.kills++
+        players[i].die()
+      }
+      return true
+    }
+
+    return false
+  }
+  findResource(){
+    var r  = 30
+
+    var closest = null
+    var closest_distance = 100
+    for (var i = 0; i < resources.length; i++){
+      // continue if not in range
+      var d = distance(this.graphics.x, this.graphics.y, resources[i].graphics.x, resources[i].graphics.y)
+      if(d > r)
+        continue
+
+      if(closest == null || closest_distance > d){
+        closest = new Node(resources[i].graphics.x, resources[i].graphics.y)
+        closest_distance = d
+      }
+    }
+
+    if(closest == null)
+      return false
+
+    this.goTo(closest)
+    return true
   }
   decideTarget(){
-    if(this.locked)
+    if (this.findPlayer())
       return
 
-    if(this.hunger < 20 && !kitchen.isFull())
-      this.setTarget(kitchen)
+    if (!storm.current.isPointInside(this.graphics.x, this.graphics.y)){
+      if(this.actions.length > 0 && storm.next.isPointInside(this.target.x, this.target.y))
+        return
+    }
 
-    if(this.needs < 20 && !wc_men.isFull())
-      this.setTarget(wc_men)
-
-    // if(this.fun < 20 && !main_stage.isFull())
-    //   this.setTarget(main_stage)
+    if (this.actions.length > 0){
+      return
+    }
 
 
-    if(this.target != null && !this.target.isFull())
+    if(this.findTerrain())
       return
 
-    if(this.table == null){
-      // Find Table
-      var tables_temp = [].concat(tables)
-      shuffle(tables_temp)
-      for (var i = 0; i < tables_temp.length; i++) {
-        if(tables_temp[i].players_count == 6) continue
-        if(tables_temp[i].getNewSeat() == null) continue
-        return this.setTarget(tables_temp[i])
-      }
-    }
-
-    var rand = getRandomInt(0, 30)
-    if(rand < 23)
-      return this.setTarget(this.table)
-    else/* if (previous_target == "Table") */{
-      return this.setTarget(main_stage)
-    }
-
+    if (this.findResource())
+      return
   }
   targetReached(){
-    if(this.target == null || this.target_seat == null) return
-    if(this.graphics.x == this.target_seat.position.x && this.graphics.y == this.target_seat.position.y){
-
-      if(this.target.constructor.name == "Table" && this.table == null){
-        this.table = this.target
-        this.table.players_count += 1
+    if(this.actions.length > 0) return
+    this.target = null
+    for (var i = 0; i < resources.length; i++){
+      if(this.graphics.x == resources[i].graphics.x && this.graphics.y == resources[i].graphics.y){
+        removeResource(i)
+        this.resources++
       }
-
-      this.previous_target = this.target.constructor.name
-      this.target.addUser(this)
-      this.target = null
     }
   }
-  decideMoves(){
-    if(this.locked)
-      return
-
-    if(this.target == null || this.target.isFull()) return
-
-    if(this.target_seat == null || !this.target_seat.available())
-      this.target_seat = this.target.getNewSeat()
-
-    this.goTo(this.target_seat.position)
-  }
   move(){
-    // if(players.indexOf(this) == 1)
-    //   console.log(this.target)
-
-    this.updateHealth()
     this.decideTarget()
-    this.decideMoves()
 
     if(this.actions.length > 0){
       var dir = this.actions[0]
@@ -136,21 +158,5 @@ class Player{
     }
 
     this.targetReached()
-  }
-  generateStats(){
-    var nD = Math.random()
-    var nN = Math.random()
-    var nC = Math.random() + 0.2
-    var nCh = Math.random() - 0.3
-    var sumRand = nN + nC + nD + nCh
-
-    this.niceness = Math.round(nN / sumRand * 200)
-    this.coding = Math.round(nC / sumRand * 200)
-    this.design = Math.round(nD / sumRand * 200)
-    this.charm = Math.round(nCh / sumRand * 200)
-  }
-  changeColor(color){
-    this.graphics.beginFill(color);
-    this.graphics.drawRect(0, 0, 1, 1);
   }
 }
